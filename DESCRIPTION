@@ -1,6 +1,6 @@
 Package: cepiweek
-Title: Continuous epidemiological week indexing for time-series analysis 
-Version: 0.0.1
+Title: Continuous Epidemiological Week Indexing for Time-Series Analysis 
+Version: 0.1.0
 Authors@R:
     person("Daniel", "Degina",
            email = "deginadan@gmail.com",
