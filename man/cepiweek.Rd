@@ -4,7 +4,7 @@
 \alias{cepiweek}
 \title{Generate Continuous Epidemiological Week Index for a Date Column}
 \usage{
-cepiweek(data, col_date, start = NULL)
+cepiweek(data, col_date, start = NULL, format = "dmy")
 }
 \arguments{
 \item{data}{A data frame containing the date column.}
@@ -13,10 +13,13 @@ cepiweek(data, col_date, start = NULL)
 
 \item{start}{Optional start date for counting weeks (Date or string).
 Defaults to the minimum date in the column \code{col_date}.}
+
+\item{format}{Optional date format flag. Use \code{"mdy"} if all dates are in
+month-day-year format (common in US). Defaults to \code{"dmy"}/\code{"ymd"} which handles
+day-month-year or year-month-day formats.}
 }
 \value{
-A data frame with an added \code{cepiweek} column containing
-continuous week indices.
+A data frame with an added \code{cepiweek} column containing continuous week indices.
 }
 \description{
 This function adds a continuous epidemiological week index to a data frame
@@ -24,21 +27,36 @@ by assigning each date to a sequential week number starting from a reference
 date.
 }
 \details{
-The generated weeks do not reset at calendar year boundaries and are not ISO
-8601 or MMWR weeks. You can specify the start date for week counting; if none
-is provided, the minimum date in the column is used.
+The generated weeks are continuous and \strong{do not reset at calendar year boundaries}.
+They are \strong{not ISO 8601 or MMWR weeks}. This function is intended for
+epidemiological modeling, time-series analysis, and nowcasting applications.
 
-This design is intended for epidemiological modeling, time-series analysis,
-and nowcasting applications.
-
-\href{https://github.com/DeginaDaniel/cepiweek}{GitHub of the package}.
+You can specify a \code{start} date for counting weeks; if none is provided, the minimum
+date in the column is used. The function also allows specifying the \code{format} of the
+dates to handle different conventions (day-month-year vs month-day-year).
+\itemize{
+\item The function automatically replaces \code{/} with \code{-} for consistency.
+\item If any dates cannot be converted, the function stops with an error.
+\item A warning is issued if the \code{start} date is after the earliest date in the column.
+\item Continuous weeks are aligned to Mondays.
+}
 }
 \examples{
+# Standard dmy/ymd dates
 k <- data.frame(
   num = c(1, 2, 3),
-  date = c("2024-01-15", "2025-02-12", "2026-08-01")
+  date = c("15-01-2024", "12/02/2025", "2026-08-01")
 )
 cepiweek(k, col_date = "date")
 
+# American format mm-dd-yyyy
+k2 <- data.frame(
+  num = c(1, 2, 3),
+  date = c("01/15/2024", "02-12-2025", "08/01/2026")
+)
+cepiweek(k2, col_date = "date", format = "mdy")
 
+}
+\seealso{
+\href{https://github.com/DeginaDaniel/cepiweek}{GitHub page of the package}.
 }
