@@ -1,6 +1,6 @@
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/cepiweek)](https://cran.r-project.org/package=cepiweek)
 [![CRAN status](https://www.r-pkg.org/badges/version/cepiweek)](https://CRAN.R-project.org/package=cepiweek)
-# cepiweek
+# cepiweek 0.1.2
 
 
 
